@@ -1,14 +1,13 @@
 import com.strawboat.confluence.Entry;
+import com.strawboat.confluence.entity.Select;
 import com.strawboat.confluence.format.Translator;
-import com.strawboat.confluence.v1.SelectEntity;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
 public class Test {
 
     public static void main(String[] args) {
-        String DATABASE_URL = "localhost";
+        String DATABASE_URL = "localhost:3306";
         String DATABASE_USER = "root";
         String DATABASE_PASSWORD = "123456";
         String driver = "com.mysql.jdbc.Driver";
@@ -32,6 +31,7 @@ public class Test {
 //        System.out.println(translateInsert());
     }
 
+
     private static String translateInsert() {
         String src = "{\"entity\":\"area\",\"data\":{\"code\":\"9999\"}}";
         return Translator.insert(src);
@@ -39,12 +39,21 @@ public class Test {
 
     private static void entityQuery(Entry entry) {
         String entity = "area";
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("Id", 3);
+        HashMap<String, Object> conditionMap = new HashMap<>();
+        conditionMap.put("sheng", 11);
+        HashMap<String, Object> orderMap = new HashMap<>();
+        orderMap.put("Id", "desc");
+        orderMap.put("di", "asc");
+        HashMap<String, Object> pageMap = new HashMap<>();
+        pageMap.put("page", 1);
+        pageMap.put("size", 10);
 
-        SelectEntity se = new SelectEntity(entity, map);
-        JSONObject object = new JSONObject(se);
-        System.out.println(entry.findList(object.toString()));
+        Select select = new Select();
+        select.setEntity(entity);
+        select.setConditionMap(conditionMap);
+        select.setOrderMap(orderMap);
+        select.setPageMap(pageMap);
+        System.out.println(entry.findList(select));
     }
 
 }
