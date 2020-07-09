@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Test {
 
     public static void main(String[] args) {
-        String DATABASE_URL = "jdbc:mysql://47.106.15.47:3306/preissue_service_bloated?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
+        String DATABASE_URL = "localhost";
         String DATABASE_USER = "root";
         String DATABASE_PASSWORD = "123456";
         String driver = "com.mysql.jdbc.Driver";
