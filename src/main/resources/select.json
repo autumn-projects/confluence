@@ -7,7 +7,7 @@
     "Id": "desc",
     "di": "asc"
   },
-  "pageMap": {
+  "pagination": {
     "page": 1,
     "size": 10
   }
