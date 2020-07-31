@@ -1,5 +1,6 @@
 package com.strawboat.confluence.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Update {
@@ -10,6 +11,20 @@ public class Update {
 
     public Update() {
 
+    }
+
+    public void addData(String key, Object value) {
+        if(dataMap == null) {
+            dataMap = new HashMap<>();
+        }
+        dataMap.put(key, value);
+    }
+
+    public void addCondition(String key, Object value) {
+        if(conditionMap == null) {
+            conditionMap = new HashMap<>();
+        }
+        conditionMap.put(key, value);
     }
 
     public String getEntity() {

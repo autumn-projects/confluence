@@ -88,6 +88,7 @@ public class Entry {
              Statement statement = connection.createStatement()) {
 
             String sql = Translator.insert(insert);
+            System.out.println(sql);
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

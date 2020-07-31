@@ -1,5 +1,6 @@
 package com.strawboat.confluence.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Delete {
@@ -9,6 +10,13 @@ public class Delete {
 
     public Delete() {
 
+    }
+
+    public void addCondition(String key, Object value) {
+        if(conditionMap == null) {
+            conditionMap = new HashMap<>();
+        }
+        conditionMap.put(key, value);
     }
 
     public String getEntity() {

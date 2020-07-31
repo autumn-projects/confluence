@@ -7,11 +7,29 @@ public class Select {
 
     private String entity;
     private Map<String, Object> conditionMap;
-    private Map<String, Object> orderMap;
-    private Map<String, Object> pageMap;
+    private Map<String, Object> sortMap;
+    private Pagination pagination;
 
     public Select() {
 
+    }
+
+    public void addCondition(String key, Object value) {
+        if (conditionMap == null) {
+            conditionMap = new HashMap<>();
+        }
+        conditionMap.put(key, value);
+    }
+
+    public void addSort(String key, Object value) {
+        if (sortMap == null) {
+            sortMap = new HashMap<>();
+        }
+        sortMap.put(key, value);
+    }
+
+    public void addPagination(int page, int size) {
+        this.pagination = new Pagination(page, size);
     }
 
     public String getEntity() {
@@ -31,19 +49,19 @@ public class Select {
     }
 
     public Map<String, Object> getOrderMap() {
-        return orderMap;
+        return sortMap;
     }
 
     public void setOrderMap(Map<String, Object> orderMap) {
-        this.orderMap = orderMap;
+        this.sortMap = orderMap;
     }
 
-    public Map<String, Object> getPageMap() {
-        return pageMap;
+    public Pagination getPagination() {
+        return pagination;
     }
 
-    public void setPageMap(Map<String, Object> pageMap) {
-        this.pageMap = pageMap;
+    public void setPagination(Pagination pagination) {
+        this.pagination = pagination;
     }
 
 }

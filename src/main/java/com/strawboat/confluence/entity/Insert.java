@@ -12,6 +12,13 @@ public class Insert {
 
     }
 
+    public void addData(String key, Object value) {
+        if(dataMap == null) {
+            dataMap = new HashMap<>();
+        }
+        dataMap.put(key, value);
+    }
+
     public String getEntity() {
         return entity;
     }

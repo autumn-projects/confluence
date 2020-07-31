@@ -1,9 +1,6 @@
 package com.strawboat.confluence.format;
 
-import com.strawboat.confluence.entity.Delete;
-import com.strawboat.confluence.entity.Insert;
-import com.strawboat.confluence.entity.Select;
-import com.strawboat.confluence.entity.Update;
+import com.strawboat.confluence.entity.*;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +11,7 @@ public class Translator {
         String entity = select.getEntity();
         Map<String, Object> conditionMap = select.getConditionMap();
         Map<String, Object> orderMap = select.getOrderMap();
-        Map<String, Object> pageMap = select.getPageMap();
+        Pagination pagination = select.getPagination();
 
         StringBuilder sb = new StringBuilder();
         sb.append(" select *");
@@ -34,9 +31,9 @@ public class Translator {
             sb.deleteCharAt(sb.length() - 1);
         }
 
-        if (pageMap != null) {
-            int page = (int) (pageMap.get(Key.PAGE));
-            int size = (int) (pageMap.get(Key.SIZE));
+        if (pagination != null) {
+            int page = pagination.getPage();
+            int size = pagination.getSize();
 
             page = page - 1 < 0 ? 0 : page - 1;
             int offset = page * size;
@@ -109,9 +106,9 @@ public class Translator {
         dataMap.forEach((key, value) -> {
             keys.append(String.format("`%s`,", key));
             if (value instanceof Integer || value instanceof Double) {
-                values.append(String.format("'%s',", value));
-            } else if (value instanceof String) {
                 values.append(String.format("%s,", value));
+            } else if (value instanceof String) {
+                values.append(String.format("'%s',", value));
             } else {
                 values.append("null,");
             }
