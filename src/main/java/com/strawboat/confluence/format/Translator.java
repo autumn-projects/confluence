@@ -1,6 +1,9 @@
 package com.strawboat.confluence.format;
 
+import com.strawboat.confluence.entity.Delete;
+import com.strawboat.confluence.entity.Insert;
 import com.strawboat.confluence.entity.Select;
+import com.strawboat.confluence.entity.Update;
 
 import java.util.Map;
 import java.util.Set;
@@ -43,13 +46,27 @@ public class Translator {
         return sb.toString();
     }
 
-    public static String update(String src) {
+    public static String count(Select select) {
+        String entity = select.getEntity();
+        Map<String, Object> conditionMap = select.getConditionMap();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select count(0)");
+        sb.append(String.format(" from %s", entity));
+
+        if (conditionMap != null) {
+            sb.append(whereSentence(conditionMap));
+        }
+
+        return sb.toString();
+    }
+
+    public static String update(Update update) {
         String sql = "update %s set %s where %s";
 
-        Parser parser = new Parser(src);
-        String entity = parser.getEntity();
-        Map<String, Object> dataMap = parser.getDataMap();
-        Map<String, Object> conditionMap = parser.getConditionMap();
+        String entity = update.getEntity();
+        Map<String, Object> dataMap = update.getDataMap();
+        Map<String, Object> conditionMap = update.getConditionMap();
 
         if (dataMap == null) throw new RuntimeException("data is null");
 
@@ -63,7 +80,7 @@ public class Translator {
         });
 
         StringBuilder condition = new StringBuilder();
-        condition.append(" where 1 = 1");
+        condition.append(" 1 = 1");
         if (conditionMap != null) {
             Set<String> keySet = conditionMap.keySet();
             keySet.forEach(key -> {
@@ -81,10 +98,9 @@ public class Translator {
         return String.format(sql, entity, data, condition);
     }
 
-    public static String insert(String src) {
-        Parser parser = new Parser(src);
-        String entity = parser.getEntity();
-        Map<String, Object> dataMap = parser.getDataMap();
+    public static String insert(Insert insert) {
+        String entity = insert.getEntity();
+        Map<String, Object> dataMap = insert.getDataMap();
         if (dataMap == null) throw new RuntimeException("data is null");
 
         StringBuilder keys = new StringBuilder();
@@ -103,6 +119,17 @@ public class Translator {
 
         return String.format("insert into %s(%s) values (%s)", entity,
                 keys.substring(0, keys.length() - 1), values.substring(0, values.length() - 1));
+    }
+
+    public static String delete(Delete delete) {
+        String entity = delete.getEntity();
+        Map<String, Object> conditionMap = delete.getConditionMap();
+        if (conditionMap == null) throw new RuntimeException("condition is null");
+
+        String str = String.format("delete from %s", entity);
+        str += whereSentence(conditionMap);
+
+        return str;
     }
 
     private static String whereSentence(Map<String, Object> conditionMap) {

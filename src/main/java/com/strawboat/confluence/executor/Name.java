@@ -1,4 +1,4 @@
-package com.strawboat.confluence.format;
+package com.strawboat.confluence.executor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

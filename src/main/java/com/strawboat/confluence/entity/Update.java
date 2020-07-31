@@ -1,16 +1,14 @@
 package com.strawboat.confluence.entity;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class Select {
+public class Update {
 
     private String entity;
+    private Map<String, Object> dataMap;
     private Map<String, Object> conditionMap;
-    private Map<String, Object> orderMap;
-    private Map<String, Object> pageMap;
 
-    public Select() {
+    public Update() {
 
     }
 
@@ -30,20 +28,11 @@ public class Select {
         this.conditionMap = conditionMap;
     }
 
-    public Map<String, Object> getOrderMap() {
-        return orderMap;
+    public Map<String, Object> getDataMap() {
+        return dataMap;
     }
 
-    public void setOrderMap(Map<String, Object> orderMap) {
-        this.orderMap = orderMap;
+    public void setDataMap(Map<String, Object> dataMap) {
+        this.dataMap = dataMap;
     }
-
-    public Map<String, Object> getPageMap() {
-        return pageMap;
-    }
-
-    public void setPageMap(Map<String, Object> pageMap) {
-        this.pageMap = pageMap;
-    }
-
 }

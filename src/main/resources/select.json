@@ -1,0 +1,14 @@
+{
+  "entity": "area",
+  "conditionMap": {
+    "sheng": 11
+  },
+  "orderMap": {
+    "Id": "desc",
+    "di": "asc"
+  },
+  "pageMap": {
+    "page": 1,
+    "size": 10
+  }
+}
